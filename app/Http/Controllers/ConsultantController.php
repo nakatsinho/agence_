@@ -42,7 +42,7 @@ class ConsultantController extends Controller
      */
     public function store(Request $request)
     {
-        return [$request->start_date,$request->consultant_id];
+        return $request->consultant_id;
         $liquid = DB::table('cao_os')->join('cao_fatura','cao_os.co_os','=','cao_fatura.co_os')->where('co_usuario', $request->consultant_id)->get();
         $fix = DB::table('cao_salario')->where('co_usuario',$request->consultant_id)->first();
 
@@ -61,9 +61,18 @@ class ConsultantController extends Controller
      * @param  \App\Models\Consultant  $consultant
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $consultant)
+    public function show($consultant)
     {
-        //
+        $liquid = DB::table('cao_os')->join('cao_fatura','cao_os.co_os','=','cao_fatura.co_os')->where('co_usuario', $consultant)->get();
+        $fix = DB::table('cao_salario')->where('co_usuario',$consultant)->first();
+
+        $liquid_value = $liquid->sum('valor') - $liquid->sum('total_imp_inc');
+        $fix_value = $fix ? $fix->brut_salario : null;
+        $comission = $liquid->sum('valor') - ($liquid->sum('total_imp_inc') * ($liquid->sum('total_imp_inc')/100) * ($liquid->sum('comissao_cn')/100) );
+        $lucro = $liquid_value - ($fix_value + $comission);
+
+        // return $report->sum('valor') - $report->sum('total_imp_inc');
+        return view('consultor.show', compact('liquid_value','fix_value','comission','lucro'));
     }
 
     /**

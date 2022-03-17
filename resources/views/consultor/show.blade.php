@@ -43,6 +43,8 @@
                     <tr>
                         <th>SALDO</th>
                         <th>19291</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>

@@ -11,8 +11,8 @@
             </nav>
             <label>Charts</label>
             <nav class="nav flex-column">
-                <a href="chart-chartjs.html" class="nav-link">Chart</a>
-                <a href="chart-chartjs.html" class="nav-link">Pizza</a>
+                <a href="#" class="nav-link">Chart</a>
+                <a href="#" class="nav-link">Pizza</a>
             </nav>
         </div><!-- component-item -->
 
@@ -29,8 +29,8 @@
         <div class="az-content-label mg-b-5">Table List of Consultants</div>
         <p class="mg-b-20">See bellow all name list of consultant in active status.</p>
 
-        <form action="{{ route('consultant.store') }}" method="POST">
-            @csrf
+        <!-- <form action="{{ route('consultant.store') }}" method="POST">
+            @csrf -->
             <div class="row">
                 <div class="col-lg-6">
                     <label for="">Start Date</label>
@@ -68,15 +68,19 @@
                                 Inactive
                                 @endif
                             </td>
-                            <td><i class="fa fa-eye"></i><input type="submit" value="Report" class="btn btn-submit"></td>
-                            <input type="hidden" value="{{ $value->co_usuario }}" name="consultant_id">
+                            <td>
+                                <!-- <input type="hidden" value="{{ $value->co_usuario }}" name="consultant_id">
+                                <i class="fa fa-eye"></i>
+                                <input type="submit" value="Report" class="btn btn-submit"> -->
+                                <a href="{{ route('consultant.show',$value->co_usuario) }}"><i class="fa fa-eye"></i> Report</a>
+                            </td>
                         </tr>
                         @php($count++)
                         @endforeach
                     </tbody>
                 </table>
             </div>
-        </form>
+        <!-- </form> -->
 
         <div class="ht-40"></div>
     </div><!-- az-content-body -->
