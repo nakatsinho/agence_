@@ -29,6 +29,4 @@ Route::resource('clients',ClientsController::class);
 
 Route::resource('consultant',ConsultantController::class);
 
-Route::post('/login', [App\Http\Controllers\Auth\AuthController::class,'postSignin',
-    'middleware' => ['guest'],
-])->name('auth.login');
+Route::get('showChart', [ConsultantController::class,'showChart'])->name('consultant.showChart');

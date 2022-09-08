@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
@@ -14,7 +15,12 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        return view('client.index');
+        $clients = DB::table('cao_cliente')->where('tp_cliente', 'A')
+            ->get();
+        $clients_pluck = DB::table('cao_cliente')->where('tp_cliente', 'A')
+            ->pluck('no_razao', 'co_cliente');
+
+        return view('client.index', compact('clients', 'clients_pluck'));
     }
 
     /**

@@ -11,7 +11,7 @@
             </nav>
             <label>Charts</label>
             <nav class="nav flex-column">
-                <a href="#" class="nav-link">Chart</a>
+                <a href="{{ route('consultant.showChart') }}" class="nav-link">Chart</a>
                 <a href="#" class="nav-link">Pizza</a>
             </nav>
         </div><!-- component-item -->
@@ -31,6 +31,8 @@
 
         <!-- <form action="{{ route('consultant.store') }}" method="POST">
             @csrf -->
+        <form action="{{ route('consultant.store') }}" method="POST">
+            @csrf
             <div class="row">
                 <div class="col-lg-6">
                     <label for="">Start Date</label>
@@ -42,44 +44,61 @@
                 </div>
             </div>
             <hr class="mg-y-30">
-            <div class="table-responsive">
-                <table class="table table-hover mg-b-0">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php($count=1)
-                        @foreach($consultant as $value)
-                        <tr>
-                            <th scope="row">{{$count}} º</th>
-                            <td>{{optional($value)->no_usuario}}</td>
-                            <td>{{optional($value)->no_email}}</td>
-                            <td>{{$value->nu_telefone}}</td>
-                            <td>@if($value->in_ativo == "S")
-                                Active
-                                @else
-                                Inactive
-                                @endif
-                            </td>
-                            <td>
-                                <!-- <input type="hidden" value="{{ $value->co_usuario }}" name="consultant_id">
+            <div class="row">
+                <div class="col-lg-10">
+                    <select id="" class="form-control" multiple="multiple" name="co_usuario[]" size="10px">
+                        @foreach($consultant_pluck as $co_usuario => $value)
+                        <option value="{{$co_usuario}}">
+                            {{$value}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-eye"></i> Report</button>
+                </div>
+            </div>
+        </form>
+        <hr class="mg-y-30">
+        <div class="table-responsive">
+            <table class="table table-hover mg-b-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php($count=1)
+                    @foreach($consultant as $value)
+                    <tr>
+                        <th scope="row">{{$count}} º</th>
+                        <td>{{optional($value)->no_usuario}}</td>
+                        <td>{{optional($value)->no_email}}</td>
+                        <td>{{$value->nu_telefone}}</td>
+                        <td>@if($value->in_ativo == "S")
+                            Active
+                            @else
+                            Inactive
+                            @endif
+                        </td>
+                        <td>
+                            <!-- <input type="hidden" value="{{ $value->co_usuario }}" name="consultant_id">
                                 <i class="fa fa-eye"></i>
                                 <input type="submit" value="Report" class="btn btn-submit"> -->
-                                <a href="{{ route('consultant.show',$value->co_usuario) }}"><i class="fa fa-eye"></i> Report</a>
-                            </td>
-                        </tr>
-                        @php($count++)
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                            <a href="{{ route('consultant.show',$value->co_usuario) }}"><i class="fa fa-eye"></i>
+                                Report</a>
+                        </td>
+                    </tr>
+                    @php($count++)
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         <!-- </form> -->
 
         <div class="ht-40"></div>
